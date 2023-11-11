@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 function App() {
   const [length, setLength] = useState(8);
@@ -7,8 +7,8 @@ function App() {
   const [password, setPassword] = useState("");
 
   const passwordGenrator = useCallback(() => {
-    const pass = "";
-    const str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let pass = "";
+    let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     if (numAllowed) {
       str += "1234567890";
     }
@@ -16,22 +16,24 @@ function App() {
       str += "$#%&*@!%?";
     }
 
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 1; i<=length; i++) {
       let charIndex = Math.floor(Math.random() * str.length + 1);
-      pass = str.charAt(charIndex);
+      pass += str.charAt(charIndex);
     }
 
     setPassword(pass);
   }, [length, numAllowed, charAllowed, setPassword]);
 
+  useEffect(()=>{passwordGenrator()},[length, numAllowed, charAllowed, passwordGenrator])
+
   return (
     <>
-      <h1 className="text-4xl text-center max-w-md mx-auto text-white m-3 bg-red-400 px-3 py-2 rounded-full mb-8">
+      <h1 className="text-4xl text-center max-w-md mx-auto text-white m-3 mt-10 bg-red-400 px-3 py-2 rounded-full mb-8">
         Password Generator
       </h1>
 
-      <div className=" w-full max-w-md mx-auto  bg-gray-600 rounded-lg py-1 px-4 my-8 font-semibold ">
-        <div className="flex rounded-full overflow-hidden my-2 ">
+      <div className=" w-full max-w-md mx-auto  bg-gray-600 rounded-lg py-6 px-4 my-8 font-semibold ">
+        <div className="flex rounded-full overflow-hidden my-4 py-2">
           <input
             type="text"
             value={password}
@@ -43,8 +45,8 @@ function App() {
             Copy
           </button>
         </div>
-        <div className="text-sm flex gap-x-3 bg-slate-300 rounded-full py-1 px-3 items-center ">
-          <div className="flex items-center gap-x-1">
+        <div className="text-sm flex gap-x-3 bg-slate-300 rounded-full py-2 px-3 items-center ">
+          <div className="flex items-center gap-x-1 ">
             <input
               type="range"
               min={6}
@@ -58,7 +60,7 @@ function App() {
             />
             <label htmlFor="range">Length({length})</label>
           </div>
-          <div className="flex items-center gap-x-1">
+          <div className="flex items-center gap-x-1 ">
             <input
               type="checkbox"
               id="numInput"
@@ -69,7 +71,7 @@ function App() {
             />
             <label htmlFor="numInput">Number</label>
           </div>
-          <div className="flex items-center gap-x-1">
+          <div className="flex items-center gap-x-1 ">
             <input
               type="checkbox"
               id="specialChar"
@@ -80,7 +82,7 @@ function App() {
                 
               }}
             
-            />
+            /> 
             <label htmlFor="specialChar">Character</label>
           </div>
         </div>
