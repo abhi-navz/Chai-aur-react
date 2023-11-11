@@ -1,10 +1,14 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 function App() {
   const [length, setLength] = useState(8);
   const [numAllowed, setNumAllowed] = useState(false);
   const [charAllowed, setCharAllowed] = useState(false);
   const [password, setPassword] = useState("");
+  const [isCopied, setIsCopied] = useState(false);
+
+  // useRef hook
+  const passwordRef = useRef(null);
 
   const passwordGenrator = useCallback(() => {
     let pass = "";
@@ -16,7 +20,7 @@ function App() {
       str += "$#%&*@!%?";
     }
 
-    for (let i = 1; i<=length; i++) {
+    for (let i = 1; i <= length; i++) {
       let charIndex = Math.floor(Math.random() * str.length + 1);
       pass += str.charAt(charIndex);
     }
@@ -24,7 +28,25 @@ function App() {
     setPassword(pass);
   }, [length, numAllowed, charAllowed, setPassword]);
 
-  useEffect(()=>{passwordGenrator()},[length, numAllowed, charAllowed, passwordGenrator])
+  const copyPassToClipboard = useCallback(() => {
+    passwordRef.current?.select();
+
+    // in case a range of values have to be selected only then
+    // passwordRef.current?.setSelectionRange(0,6)
+
+    setIsCopied(true);
+
+    // Reset the "Copied" text after a certain duration (e.g., 2 seconds)
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
+
+    window.navigator.clipboard.writeText(password);
+  }, [password]);
+
+  useEffect(() => {
+    passwordGenrator();
+  }, [length, numAllowed, charAllowed, passwordGenrator]);
 
   return (
     <>
@@ -40,9 +62,13 @@ function App() {
             placeholder="password"
             className=" outline-none py-1 px-3 w-full "
             readOnly
+            ref={passwordRef}
           />
-          <button className="bg-blue-700 px-3 text-white py-1 outline-none shrink-0">
-            Copy
+          <button
+            onClick={copyPassToClipboard}
+            className={`bg-blue-700 px-3 text-white py-1 outline-none shrink-0 ${isCopied ? 'copied' : ''}`}
+          >
+            {isCopied ? "Copied" : "Copy"}
           </button>
         </div>
         <div className="text-sm flex gap-x-3 bg-slate-300 rounded-full py-2 px-3 items-center ">
@@ -77,12 +103,9 @@ function App() {
               id="specialChar"
               defaultChecked={charAllowed}
               onChange={() => {
-                
                 setCharAllowed((prev) => !prev);
-                
               }}
-            
-            /> 
+            />
             <label htmlFor="specialChar">Character</label>
           </div>
         </div>
