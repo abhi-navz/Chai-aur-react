@@ -7,5 +7,5 @@ body {
 }
 
 .copied {
-    @apply bg-red-400 text-white;
+    @apply bg-red-400 text-white
 }

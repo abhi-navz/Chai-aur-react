@@ -66,7 +66,9 @@ function App() {
           />
           <button
             onClick={copyPassToClipboard}
-            className={`bg-blue-700 px-3 text-white py-1 outline-none shrink-0 ${isCopied ? 'copied' : ''}`}
+            className={`bg-blue-700 hover:text-black px-3 text-white py-1 outline-none shrink-0 ${
+              isCopied ? "copied" : ""
+            }`}
           >
             {isCopied ? "Copied" : "Copy"}
           </button>
@@ -76,7 +78,7 @@ function App() {
             <input
               type="range"
               min={6}
-              max={15}
+              max={25}
               value={length}
               id="range"
               className="cursor-pointer"
