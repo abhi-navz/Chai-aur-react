@@ -1,5 +1,15 @@
+import React from "react";
+
+import Footer from "./Component/Footer/Footer";
+import Header from "./Component/Header/Header";
+import Home from "./Component/Home/Home";
+
 function App() {
-  return <h1 className="bg-red-400 p-4 text-center">React Router</h1>;
+  return (<>
+  
+  </>)
+  
+
 }
 
 export default App;
