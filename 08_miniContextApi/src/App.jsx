@@ -1,12 +1,15 @@
 
-function App() {
-  
+import Profile from "./Components/Profile";
+import { SignIn } from "./Components/Signin";
+import UserContextProvider from "./Context/UserContextProvider";
 
+function App() {
   return (
-    <>
-    Context Api
-    </>
-  )
+    <UserContextProvider>
+      <SignIn />
+      <Profile />
+    </UserContextProvider>
+  );
 }
 
-export default App
+export default App;
