@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { TodoProvider } from "./Context";
+import { TodoForm, TodoItem } from "./Component/index";
 
 function App() {
   // variable to hold all the todos
@@ -7,7 +8,7 @@ function App() {
 
   // fucntionality to add new todos to exisitng todos array
   const addTodo = (todo) => {
-    setTodos((prevTodos) => [{ id: Date.now(), ...todo }, ...prevTodos]);
+    setTodos((prevTodos) => [todo, ...prevTodos]);
   };
 
   // functionality to update existing prevTodo with new todo in the todos array.
@@ -36,15 +37,15 @@ function App() {
   // functionality to fetch saved items from local storage of browser.
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos"));
-    if (storedTodos && storedTodos.length>0) {
+    if (storedTodos && storedTodos.length > 0) {
       setTodos(storedTodos);
     }
   }, []);
 
   // fucntionality to save todos into local storage of browser
-  useEffect(()=>{
-    localStorage.setItem('todos',JSON.stringify(todos))
-  },[todos])
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <TodoProvider
@@ -55,7 +56,10 @@ function App() {
           <h1 className="text-2xl font-bold text-center mb-8 mt-2">
             Manage Your Todos
           </h1>
-          <div className="mb-4">{/* Todo form goes here */}</div>
+          <div className="mb-4">
+            {/* Todo form goes here */}
+            <TodoForm />
+          </div>
           <div className="flex flex-wrap gap-y-3">
             {/*Loop and Add TodoItem here */}
           </div>
