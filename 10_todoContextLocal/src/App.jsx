@@ -8,7 +8,7 @@ function App() {
 
   // fucntionality to add new todos to exisitng todos array
   const addTodo = (todo) => {
-    setTodos((prevTodos) => [todo, ...prevTodos]);
+    setTodos((prevTodos) => [...prevTodos, todo]);
   };
 
   // functionality to update existing prevTodo with new todo in the todos array.
@@ -62,6 +62,11 @@ function App() {
           </div>
           <div className="flex flex-wrap gap-y-3">
             {/*Loop and Add TodoItem here */}
+            {todos.map((todo) => (
+              <div key={todo.id} className="w-full">
+                <TodoItem todo={todo} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
