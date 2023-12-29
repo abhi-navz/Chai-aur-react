@@ -6,9 +6,16 @@ function Todos() {
   const todos = useSelector((state) => state.todos);
   const dispatch = useDispatch();
   const [updatedText, setUpdatedText] = useState();
+  const [editableTodoId, setEditableTodoId] = useState(null)
   const handleUpdate = (todoId) => {
-    dispatch(updateTodo({ id: todoId, updatedText }));
-    setUpdatedText("");
+    if (editableTodoId === todoId) {
+      // Dispatch update only if this todo is in edit mode
+      dispatch(updateTodo({ id: todoId, updatedText }));
+      setEditableTodoId(null); // Exit edit mode
+    } else {
+      setEditableTodoId(todoId); // Enter edit mode
+    }
+    setUpdatedText(""); // Clear the input after updating
   };
   return (
     <>
@@ -19,7 +26,19 @@ function Todos() {
             className="mt-4 flex justify-between items-center bg-zinc-800 px-4 py-2 rounded"
             key={todo.id}
           >
-            <div className="text-white">{todo.text}</div>
+            {editableTodoId === todo.id ? (
+              // Edit mode
+              <input
+                type="text"
+                value={updatedText}
+                onChange={(e) => setUpdatedText(e.target.value)}
+                placeholder="Enter updated text"
+                className="border p-1 rounded-md"
+              />
+            ) : (
+              // Display mode
+              <div className="text-white">{todo.text}</div>
+            )}
             {/* {Update button} */}
             <button
               onClick={() => handleUpdate(todo.id)}

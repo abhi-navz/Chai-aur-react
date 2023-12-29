@@ -1,18 +1,16 @@
-import { Provider } from "react-redux";
+import './App.css'
 
-import AddTodo from "./components/AddTodo"
-
-
+import AddTodo from "./components/AddTodo";
+import Todos from "./components/Todos";
 
 function App() {
-  
-
   return (
-    <Provider>
-   
-    <AddTodo/>
-    </Provider>
-  )
+    <>
+      <h1>React Redux toolkit Tutorial</h1>
+      <AddTodo />
+      <Todos />
+    </>
+  );
 }
 
-export default App
+export default App;
