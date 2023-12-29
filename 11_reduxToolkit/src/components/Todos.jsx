@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeTodo, updateTodo } from "../features/todo/todoSlice";
 
 function Todos() {
   const todos = useSelector((state) => state.todos);
   const dispatch = useDispatch();
+  const [updatedText, setUpdatedText] = useState();
+  const handleUpdate = (todoId) => {
+    dispatch(updateTodo({ id: todoId, updatedText }));
+    setUpdatedText("");
+  };
   return (
     <>
       <div>Todos</div>
@@ -15,6 +20,15 @@ function Todos() {
             key={todo.id}
           >
             <div className="text-white">{todo.text}</div>
+            {/* {Update button} */}
+            <button
+              onClick={() => handleUpdate(todo.id)}
+              className="text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
+            >
+              Update
+            </button>
+
+            {/* delete button */}
             <button
               onClick={() => dispatch(removeTodo(todo.id))}
               className="text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
