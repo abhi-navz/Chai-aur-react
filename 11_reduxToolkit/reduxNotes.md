@@ -36,4 +36,15 @@ export const todoSlice = createSlice({
 - addTodo, removeTodo , and other properties always give access to "state" and "action"
 - "state" gives acces to the values of initial state.
 - "action" holds values like id which will be required like in case of removeTodo.
-- 
+
+
+##  The code  provided is a common structure for setting up a Redux store using Redux Toolkit, and it serves as a boilerplate for many Redux Toolkit applications
+```javascript
+import { configureStore } from "@reduxjs/toolkit";
+
+import todoReducer from '../features/todo/todoSlice';
+
+export const store = configureStore({
+    reducer:todoReducer
+});
+```
