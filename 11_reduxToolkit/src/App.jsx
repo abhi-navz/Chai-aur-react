@@ -1,10 +1,17 @@
+import { Provider } from "react-redux";
+
+import AddTodo from "./components/AddTodo"
+
+
+
 function App() {
   
 
   return (
-    <>
-    <h1 className="bg-red-400">Hello world</h1>
-    </>
+    <Provider>
+   
+    <AddTodo/>
+    </Provider>
   )
 }
 
